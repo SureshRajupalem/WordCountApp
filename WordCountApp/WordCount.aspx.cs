@@ -17,17 +17,14 @@ namespace WordCountApp
         {
             var wordCounters = new IWordCounter[0] { };
             WordCounter wcr = new WordCounter();       
-            for (int i = 0; i < 1; i++)
-            {
+           
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-
                 var wcResult = wcr.CountWords(inputPath);
-
                 File.WriteAllLines(ouputPath,
                         wcResult.Select(x => "[" + x.Key + " " + x.Value + "]").ToArray());
 
-             }
+           
         }
     }
 }
