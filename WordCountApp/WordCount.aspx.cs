@@ -15,23 +15,19 @@ namespace WordCountApp
          const string ouputPath = @"C:\temp\results.txt";
         protected void Page_Load(object sender, EventArgs e)
         {
-            var wordCounters = new IWordCounter[]{ };
-            WordCounter wcr = new WordCounter();
-          
-            foreach (var wc in wordCounters)
+            var wordCounters = new IWordCounter[0] { };
+            WordCounter wcr = new WordCounter();       
+            for (int i = 0; i < 1; i++)
             {
                 GC.Collect();
-                GC.WaitForPendingFinalizers();               
-                var wcResult = wcr.CountWords(inputPath);
-                using (StreamWriter writer = new StreamWriter(ouputPath))
-                {
-                    writer.WriteLine(wcResult.GetType().Name + "   " + Convert.ToString(wcResult.Count) + Environment.NewLine);
-                }
-              
-             
-            }
+                GC.WaitForPendingFinalizers();
 
-         
+                var wcResult = wcr.CountWords(inputPath);
+
+                File.WriteAllLines(ouputPath,
+                        wcResult.Select(x => "[" + x.Key + " " + x.Value + "]").ToArray());
+
+             }
         }
     }
 }
